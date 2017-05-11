@@ -64,18 +64,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                boolean found = false;
 
                 for (Accounts cn : accounts) {
                     if (email.getText().toString().equals(cn.getEmail()) && password.getText().toString().equals(cn.getPassword())) {
+                        found = true;
                         Intent i = new Intent(MainActivity.this, LoginWelcomeActivity.class);
                         i.putExtra("name", cn.getName());
                         i.putExtra("mail", email.getText().toString());
                         i.putExtra("phone", cn.getPhoneNumber());
                         startActivity(i);
-                    } else {
-                        Toast.makeText(MainActivity.this, "Please Check your name and Password !! ", Toast.LENGTH_LONG).show();
                     }
+                }
 
+                if (!found) {
+                    Toast.makeText(MainActivity.this, "Sorry, Account not Exist !", Toast.LENGTH_SHORT).show();
                 }
             }
         });
