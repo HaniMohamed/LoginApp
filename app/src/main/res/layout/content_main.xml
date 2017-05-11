@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -51,10 +50,10 @@
         <EditText
             android:id="@+id/et_name"
             style="@style/EditText"
-            android:inputType="text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
-            android:layout_width="match_parent" />
+            android:inputType="text" />
     </LinearLayout>
 
     <LinearLayout
@@ -86,10 +85,10 @@
         android:animateFirstView="true">
 
         <LinearLayout
+            android:id="@+id/lt_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/lt_sign">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/bt_sign_in"
@@ -103,22 +102,22 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lt_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/lt_create"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <EditText
                 android:id="@+id/et_phone"
                 style="@style/EditText"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
-                android:ems="10"
                 android:digits="0123456789"
-                android:maxLength="10"
+                android:ems="10"
                 android:hint="Contact Number"
-                android:inputType="phone"/>
+                android:inputType="phone"
+                android:maxLength="10" />
 
             <Button
                 android:id="@+id/bt_create"

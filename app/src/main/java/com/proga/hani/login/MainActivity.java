@@ -1,22 +1,23 @@
 package com.proga.hani.login;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout signUpLt, createLt, signLt;
-    Button login,signIn, signUp, create;
+    Button login, signIn, signUp, create;
     EditText email, password, name, phone;
 
 
@@ -24,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
+
+        final DatabaseHandler db = new DatabaseHandler(this);
+        final List<Accounts> accounts = db.getAllAccounts();
+
+
         login = (Button) findViewById(R.id.bt_login);
         signUp = (Button) findViewById(R.id.bt_signup);
         create = (Button) findViewById(R.id.bt_create);
-        signIn = (Button) findViewById(R.id.bt_create);
+        signIn = (Button) findViewById(R.id.bt_sign_in);
 
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_password);
@@ -44,11 +50,33 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 login.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.buttoncolor));
                 signUp.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.white));
                 signUpLt.setVisibility(View.GONE);
                 createLt.setVisibility(View.GONE);
                 signLt.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                for (Accounts cn : accounts) {
+                    if (email.getText().toString().equals(cn.getEmail()) && password.getText().toString().equals(cn.getPassword())) {
+                        Intent i = new Intent(MainActivity.this, LoginWelcomeActivity.class);
+                        i.putExtra("name", cn.getName());
+                        i.putExtra("mail", email.getText().toString());
+                        i.putExtra("phone", cn.getPhoneNumber());
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(MainActivity.this, "Please Check your name and Password !! ", Toast.LENGTH_LONG).show();
+                    }
+
+                }
             }
         });
 
@@ -68,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!name.getText().toString().equals("") && checkEmail(email.getText().toString().trim()) && checkPass(password.getText().toString().trim()) && !phone.getText().toString().equals("")) {
+
+                    // Inserting Contacts
+                    db.addAccount(new Accounts(name.getText().toString(), password.getText().toString(), phone.getText().toString(), email.getText().toString()));
+
                     Intent i = new Intent(MainActivity.this,LoginWelcomeActivity.class);
                     i.putExtra("name",name.getText().toString());
                     i.putExtra("mail",email.getText().toString());
@@ -103,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(pass);
 
-        if(!matcher.matches() || ! (pass.length()==6)){
+        if (!matcher.matches()) {
             Toast.makeText(getApplicationContext(),"Invalid password", Toast.LENGTH_SHORT).show();
 
             return false;
