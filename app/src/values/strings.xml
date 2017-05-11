@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Login</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="loginfail">Either email or password is wrong!</string>
+    <string name="invalidemail">Invalid Email</string>
+</resources>

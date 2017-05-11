@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textboxTint">#CC5ec639</color>
+    <color name="buttoncolor">#735ec639</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="appBackground">#FFFFFF</color>
+    <item name="hint" type="color">@android:color/darker_gray</item>
+</resources>
